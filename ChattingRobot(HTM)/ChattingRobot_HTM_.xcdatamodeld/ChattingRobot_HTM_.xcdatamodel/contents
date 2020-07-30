@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19C57" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Cell" representedClassName="Cell" syncable="YES">
+        <attribute name="index" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="column" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Column" inverseName="cells" inverseEntity="Column"/>
+        <relationship name="segments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Segment" inverseName="cell" inverseEntity="Segment"/>
+    </entity>
+    <entity name="ChrarcterRecord" representedClassName="ChrarcterRecord" syncable="YES">
+        <attribute name="count" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[Int]"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="record" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[String]"/>
+    </entity>
+    <entity name="Column" representedClassName="Column" syncable="YES">
+        <attribute name="activedutycycle" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="boostvalue" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="timeaverageactivation" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="cells" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Cell" inverseName="column" inverseEntity="Cell"/>
+        <relationship name="links" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Link" inverseName="column" inverseEntity="Link"/>
+        <relationship name="record" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Layer" inverseName="columns" inverseEntity="Layer"/>
+    </entity>
+    <entity name="Layer" representedClassName="Layer" syncable="YES">
+        <attribute name="cellscount" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="columnactivethreshold" optional="YES" attributeType="Float" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="columnssize" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="currenttrainindex" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="decrementvalue" optional="YES" attributeType="Float" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="faulttolerance" optional="YES" attributeType="Float" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="incrementvalue" optional="YES" attributeType="Float" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="linkactivethreshold" optional="YES" attributeType="Float" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="lowerlinksratio" optional="YES" attributeType="Float" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="winnercolumnsratio" optional="YES" attributeType="Float" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="columns" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Column" inverseName="record" inverseEntity="Column"/>
+        <relationship name="record" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TrainRecord" inverseName="cortex" inverseEntity="TrainRecord"/>
+    </entity>
+    <entity name="Link" representedClassName="Link" syncable="YES">
+        <attribute name="connectedX" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="connectedY" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="permanence" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="column" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Column" inverseName="links" inverseEntity="Column"/>
+    </entity>
+    <entity name="Segment" representedClassName="Segment" syncable="YES">
+        <relationship name="cell" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Cell" inverseName="segments" inverseEntity="Cell"/>
+        <relationship name="synapses" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Synapse" inverseName="segment" inverseEntity="Synapse"/>
+    </entity>
+    <entity name="Synapse" representedClassName="Synapse" syncable="YES">
+        <attribute name="connectedX" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="connectedY" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="permanence" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="segment" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Segment" inverseName="synapses" inverseEntity="Segment"/>
+    </entity>
+    <entity name="TrainRecord" representedClassName="TrainRecord" syncable="YES">
+        <attribute name="date" optional="YES" attributeType="String"/>
+        <relationship name="cortex" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Layer" inverseName="record" inverseEntity="Layer"/>
+    </entity>
+    <elements>
+        <element name="Cell" positionX="-27" positionY="99" width="128" height="88"/>
+        <element name="ChrarcterRecord" positionX="-54" positionY="72" width="128" height="88"/>
+        <element name="Column" positionX="-54" positionY="81" width="128" height="133"/>
+        <element name="Layer" positionX="-54" positionY="-9" width="128" height="223"/>
+        <element name="Link" positionX="-45" positionY="90" width="128" height="103"/>
+        <element name="Segment" positionX="-18" positionY="117" width="128" height="73"/>
+        <element name="Synapse" positionX="0" positionY="126" width="128" height="103"/>
+        <element name="TrainRecord" positionX="-27" positionY="99" width="128" height="73"/>
+    </elements>
+</model>
