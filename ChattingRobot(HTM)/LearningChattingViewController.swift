@@ -10,173 +10,275 @@ import UIKit
 
 class LearningChattingViewController: UIViewController, UITextFieldDelegate {
     
+    
+    @IBOutlet weak var SearchInput: UITextField!
+    @IBOutlet weak var SearchBtn: UIButton!
+    
     private let LearnCharacter = LearnCharacterViewController()
+    private let Data = DataClassification()
+    private let SpacialLearning = HTMSpacialPooling()
+    private let TempertalLearning = HTMTemperalPooling()
 
-
-    @IBOutlet weak var ChattingBlock: UITextView!
-    @IBOutlet weak var SendMsgField: UITextField!
-    @IBOutlet weak var SendMsgBtn: UIButton!
-    @IBOutlet weak var ResponseMsgField: UITextField!
-    @IBOutlet weak var ResponseMsgBtn: UIButton!
+    public var Cortex: [LayerComponent]? {
+        didSet {
+            // Since we just obsever the learning result from first layer, therefore, we don't need to care about other layers' condition
+            CortexLayerSize = Cortex?[0].layerParameters.ColumnsSize
+        }
+    }
     
-    @IBOutlet weak var AutoTrainBtn: UIButton!
-    @IBOutlet weak var AutoModeSwitch: UISwitch!
-    @IBOutlet weak var AutoTrainCountSlider: UISlider!
-    @IBOutlet weak var AutoTrainCountLabel: UILabel!
+    public var InputLayer = LayerComponent(
+                                    layerP: LayerParameter(cs: 24, llp: -1, cc: -1, lat: -1, ft: -1, wcc: -1, iv: -1, dv: -1),
+                                    columns: [],
+                                    coefficient: TemperalPoolingCoefficient(
+                                        pwc: [],
+                                        pac: [],
+                                        pas: [],
+                                        pma: []))
     
-    // Learning Columns
-    public var Characters = [CharacterData]()
+    private var CortexLayerSize: Int?
     
-    private var TrainDatas = [String]()
-    private var InputBitMap = Array(repeating: Array(repeating: false, count: InputsSize), count: InputsSize)
-                                            
-    // Auto Train Parameters
-    private let TrainCharacters = ["你", "是", "誰",
-                             "我", "是", "人", "工", "智", "慧"]
-    private var AutoTrainCount: Int = 0
+    private var OutputLayerSize = 24
+    
+    private var CortexGraph = [[CAShapeLayer]]()
+    private var OutputGraph = [[CAShapeLayer]]()
+    
+    private var Characters = [CharacterData]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        if Cortex == nil {
+            print("[ERROR] There is no segue data from previous view!!!")
+            
+            SearchInput.isEnabled = false
+            SearchBtn.isEnabled = false
+        } else {
+            UserInterfaceSetting()
+            OutputGraphSetting()
+            CortexGraphSetting()
+            
+            Cortex![0].tpCoefficient = TemperalPoolingCoefficient(pwc: [], pac: [], pas: [], pma: [])
+            
+            Characters = Data.scanBDFdata()
+        }
+    }
+    
+    // MARK: - User Interface Setting
+    
+    private func UserInterfaceSetting() {
+        // Textfield setting
+        SearchInput.layer.borderColor = UIColor.clear.cgColor
+        SearchInput.delegate = self
         
-        self.SendMsgField.delegate = self
-        self.ResponseMsgField.delegate = self
+        // Button setting
+        SearchBtn.tintColor = .yellow
+        SearchBtn.layer.borderColor = UIColor.yellow.cgColor
+        SearchBtn.layer.borderWidth = 1.5
+        SearchBtn.layer.cornerRadius = 10
+        
+        let tap = UILongPressGestureRecognizer(target: self, action: #selector(SearchBtnControl))
+        tap.minimumPressDuration = 0
+        SearchBtn.addGestureRecognizer(tap)
+        SearchBtn.isUserInteractionEnabled = true
     }
     
-//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-//        self.view.endEditing(true)
-//        return false
-//    }
-//    
-//    private func PreloadPartCharacters() -> [String] {
-//        var result = [String]()
-//
-//        for i in 0..<TrainCharacters.count {
-//            let str = LearnCharacter.EncodindCharacter(char: TrainCharacters[i])
-//            result.append(str)
-//        }
-//
-//        return result
-//    }
-//        
-//    private func GenerateAnswerBitMap(characterID: String) {
-//        for i in 0...Characters.count {
-//            if i == Characters.count {
-//                print("Cannot find corresponding unicode!!!")
-//                break
-//            } else if Characters[i].codeID != characterID {
-//                continue
-//            } else {
-//                for row in 0..<InputsSize {
-//                    for col in 0..<InputsSize {
-//                        if row < Characters[i].BBX_height, col < Characters[i].BBX_width {
-//                            InputBitMap[row][col] = (Characters[i].bitmap[row][col] == 1) ? true : false
-//                        } else {
-//                            InputBitMap[row][col] = false
-//                        }
-//                    }
-//                }
-//                return
-//            }
-//        }
-//    }
-//    
-//    private func InitailOutput() {
-//        for row in 0..<InputsSize {
-//            var tempRow_input = [LearningColumn]()
-//            for col in 0..<InputsSize {
-//                let unit = LearningColumn(x: col, y: row)
-//                tempRow_input.append(unit)
-//            }
-//            self.OutputLayer.append(tempRow_input)
-//        }
-//    }
-//    
-//    private func AutoTrain() {
-//        var TrainCount: Int = 0
-//        
-//        while TrainCount > 0 {
-//            
-//            // Calculate the connected link' count for every column
-//            for row in 0..<ColumnsSize {
-//                for col in 0..<ColumnsSize {
-//                    ColumnOne[row][col].ColumnNetWeight(input: OutputLayer)
-//                }
-//            }
-//            
-//            // Find out winner columns
-//            let WinnerColumns = SpatialLearning.FindWinningColumns(Columns: ColumnOne)
-//            
-//            // Activated output layer
-//            for row in 0..<ColumnsSize {
-//                for col in 0..<ColumnsSize {
-//                    if ColumnOne[row][col].Activated() {
-//                        OutputLayer = WinnerColumns[row][col].ActivateLinks(LowestLayer: OutputLayer)
-//                    }
-//                }
-//            }
-//            
-//            for row in 0..<InputsSize {
-//                for col in 0..<InputsSize {
-//                    OutputLayer[row][col].Activated()
-//                }
-//            }
-//            
-//            // Change links' weight and Update boost factor for every winner column
-//            ColumnOne = SpatialLearning.WeightChange(Answer: InputBitMap, OutputLayer: OutputLayer, UpperLayer: ColumnOne)
-//            ColumnOne = SpatialLearning.UpdateBoostFactor(UpperLayer: ColumnOne)
-//            
-//            // Temperal Pooling Algorithm
-//            (ColumnOne, TPcoeffiecient) = TemperalLearning.EvaluateActiveColumns(layer: ColumnOne, TPcoefficient: TPcoeffiecient)
-//            
-//            // Reset all training parameters
-//            ResetTrain()
-//            
-//            TrainCount -= 1
-//        }
-//    }
-//    
-//    private func ResetTrain() {
-//        TPcoeffiecient = TemperalPoolingCoefficient(pwc: [], pac: [],
-//                                                    pas: [], pma: [])
-//        
-//        for row in 0..<InputsSize {
-//            for col in 0..<InputsSize {
-//                OutputLayer[row][col].Reset()
-//            }
-//        }
-//    }
-    
-    // ------------------ UI functions ------------------ //
-    
-    // User trains the columns in person
-    @IBAction func SendMsg(_ sender: UIButton) {
-        if SendMsgField.text != "" {
-            ChattingBlock.text += "Tzuyu: " + SendMsgField.text! + "\n"
-            SendMsgField.text = ""
+    @objc private func SearchBtnControl(gesture: UILongPressGestureRecognizer) {
+        if gesture.state == .began {
+            SearchBtn.backgroundColor = .yellow
+            SearchBtn.tintColor = .darkGray
+        } else if gesture.state == .ended {
+            SearchBtn.backgroundColor = .clear
+            SearchBtn.tintColor = .yellow
+            
+            Predict()
         }
     }
     
-    @IBAction func ResponseMsg(_ sender: UIButton) {
-        if ResponseMsgField.text != "" {
-            ChattingBlock.text += "AI: " + ResponseMsgField.text! + "\n"
-            ResponseMsgField.text = ""
+    private func OutputGraphSetting() {
+        let minX = self.view.frame.width * 0.1
+        let maxX = self.view.frame.width * 0.9
+        let minY = minX
+        let interval = (maxX - minX) / CGFloat(OutputLayerSize - 1)
+        
+        for row in 0..<OutputLayerSize {
+            var tempArray = [CAShapeLayer]()
+            
+            for col in 0..<OutputLayerSize {
+                let center = CGPoint(x: minX + interval * CGFloat(col), y: minY + interval * CGFloat(row))
+                let circlePath = UIBezierPath(
+                    arcCenter: center,
+                    radius: interval * 0.4,
+                    startAngle: 0,
+                    endAngle: 2 * CGFloat.pi,
+                    clockwise: true)
+                
+                let shapeLayer = CAShapeLayer()
+                shapeLayer.path = circlePath.cgPath
+                
+                shapeLayer.fillColor = UIColor.clear.cgColor
+                shapeLayer.strokeColor = UIColor.gray.cgColor
+                shapeLayer.lineWidth = 1.0
+                
+                tempArray.append(shapeLayer)
+                self.view.layer.addSublayer(shapeLayer)
+            }
+            
+            OutputGraph.append(tempArray)
         }
     }
     
-    // Auto training mode
-    @IBAction func AutoTrain(_ sender: UIButton) {
-        AutoTrainCount = Int(AutoTrainCountSlider.value)
-//        AutoTrain()
+    private func CortexGraphSetting() {
+        let minX = self.view.frame.width * 0.05
+        let maxX = self.view.frame.width * 0.95
+        let minY = minX * 0.01 + self.view.frame.midY
+        let interval = (maxX - minX) / CGFloat(CortexLayerSize! - 1)
+        
+        for row in 0..<CortexLayerSize! {
+            var tempArray = [CAShapeLayer]()
+            
+            for col in 0..<CortexLayerSize! {
+                let center = CGPoint(x: minX + interval * CGFloat(col), y: minY + interval * CGFloat(row))
+                let circlePath = UIBezierPath(
+                    arcCenter: center,
+                    radius: interval * 0.4,
+                    startAngle: 0,
+                    endAngle: 2 * CGFloat.pi,
+                    clockwise: true)
+                
+                let shapeLayer = CAShapeLayer()
+                shapeLayer.path = circlePath.cgPath
+                
+                shapeLayer.fillColor = UIColor.clear.cgColor
+                shapeLayer.strokeColor = UIColor.gray.cgColor
+                shapeLayer.lineWidth = 1.0
+                
+                tempArray.append(shapeLayer)
+                self.view.layer.addSublayer(shapeLayer)
+            }
+            
+            CortexGraph.append(tempArray)
+        }
     }
     
-    @IBAction func AutoTrainMode(_ sender: UISwitch) {
-        AutoTrainBtn.isEnabled = AutoModeSwitch.isOn
-        AutoTrainCountSlider.isEnabled = AutoModeSwitch.isOn
+    
+    // MARK: - Intents
+    
+    private func GenerateAnswerBitMap(id: String) {
+
+        for i in Characters.indices {
+            if i == Characters.count {
+                print("Cannot find corresponding unicode!!!")
+                break
+            } else if Characters[i].codeID != id {
+                continue
+            } else {
+                for row in 0..<OutputLayerSize {
+                    for col in 0..<OutputLayerSize {
+                        if row < Characters[i].BBX_height, col < Characters[i].BBX_width {
+                            InputLayer.columns[row][col].isActiveForward = Characters[i].bitmap[row][col] == 1
+                        } else {
+                            InputLayer.columns[row][col].isActiveForward = false
+                        }
+                    }
+                }
+                
+                return
+            }
+        }
     }
     
-    @IBAction func AutoTrainCountSetting(_ sender: UISlider) {
-        sender.value.round()
-        AutoTrainCountLabel.text = "\(Int(sender.value))"
+    private func Predict() {
+        guard let character = SearchInput.text else { return }
+        
+        let stringID = LearnCharacter.EncodindCharacter(char: character)
+        
+        GenerateAnswerBitMap(id: stringID)
+        
+        let CurrentLayerSize = Cortex![0].layerParameters.ColumnsSize
+        
+        // Calculate the connected links' count for every column
+        for row in 0..<CurrentLayerSize {
+            for col in 0..<CurrentLayerSize {
+                let threshold = Cortex![0].layerParameters.LinkActiveThreshold
+                Cortex![0].columns[row][col].ForwardActivation(for: InputLayer.columns, with: threshold)
+            }
+        }
+        
+        // Find winner columns according to the inhibition radiuss
+        let WinnerColumns = SpacialLearning.NeighborOverlap(for: Cortex![0].columns, with: CurrentLayerSize, radius: 5)
+        
+        // Replace current layer with winner columns
+        Cortex![0].columns = WinnerColumns
+                    
+        // Temperal Pooler
+        Cortex![0] = TempertalLearning.EvalauteActiveColumns(for: Cortex![0], trainCount: 2, enable_learning: true)
+
+        let preactiveSegments = Cortex![0].tpCoefficient.preActiveDendrites
+        
+        var ColumnsGraph = Array(repeating: Array(repeating: false, count: CortexLayerSize!), count: CortexLayerSize!)
+        
+        for row in 0..<CortexLayerSize! {
+            for col in 0..<CortexLayerSize! {
+                if WinnerColumns[row][col].isActiveForward {
+                    CortexGraph[row][col].fillColor = UIColor.orange.cgColor
+                }
+            }
+        }
+        
+        print("preactiveSegments count is \(preactiveSegments.count)")
+        
+        if !preactiveSegments.isEmpty {
+            for d in preactiveSegments {
+                let x = d.Coordinate.first
+                let y = d.Coordinate.second
+                
+                ColumnsGraph[y][x] = true
+            }
+            
+            for row in 0..<CortexLayerSize! {
+                for col in 0..<CortexLayerSize! {
+                    if ColumnsGraph[row][col] {
+                        
+                        if WinnerColumns[row][col].isActiveForward {
+                            CortexGraph[row][col].fillColor = UIColor.white.cgColor
+                        } else {
+                            CortexGraph[row][col].fillColor = UIColor.green.cgColor
+                        }
+                        
+                        Cortex![0].columns[row][col].isActiveForward = true
+                    } else {
+                        
+                        if WinnerColumns[row][col].isActiveForward {
+                            CortexGraph[row][col].fillColor = UIColor.red.cgColor
+                        }
+                        
+                        Cortex![0].columns[row][col].isActiveForward = false
+                    }
+                }
+            }
+        }
+        
+        
+        for row in 0..<CortexLayerSize! {
+            for col in 0..<CortexLayerSize! {
+                let threshold = Cortex![0].layerParameters.LinkActiveThreshold
+                
+                InputLayer.columns = Cortex![0].columns[row][col].BackwardActivation(for: InputLayer.columns, with: threshold)
+            }
+        }
+        
+        for row in 0..<OutputLayerSize {
+            for col in 0..<OutputLayerSize {
+                InputLayer.columns[row][col].UpperToLowerActivated()
+            }
+        }
+        
+        for row in 0..<OutputLayerSize {
+            for col in 0..<OutputLayerSize {
+                if InputLayer.columns[row][col].isActiveBackward {
+                    OutputGraph[row][col].fillColor = UIColor.orange.cgColor
+                }
+            }
+        }
     }
 }

@@ -183,7 +183,7 @@ public var SynapsesConnectedPermenace: Float {
         let temp = value as! Float
         return temp / 100.0
     } else {
-        return 0.1
+        return 0.5
     }
 }
 
@@ -195,10 +195,10 @@ public var PredictedDecrement: Float {
 
 public var ActivatedCellThreshold: Int {
     if let threshold = HTMUD.object(forKey: "ACeT") { return threshold as! Int }
-    else { return 10 }
+    else { return 3 }
 }
 
 public var MatchingLearningThreshold: Int {
     if let threshold = HTMUD.object(forKey: "MLT") { return threshold as! Int }
-    else { return 5 }
+    else { return 1 }
 }

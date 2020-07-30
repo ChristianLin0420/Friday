@@ -2,6 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:/Users/christian/Desktop/HTM/ChattingRobot(HTM)/Code/ChattingRobot(HTM)_0730/Synapse+CoreDataClass.swift">
+   </FileRef>
+   <FileRef
+      location = "group:/Users/christian/Desktop/HTM/ChattingRobot(HTM)/Code/ChattingRobot(HTM)_0730/Synapse+CoreDataProperties.swift">
+   </FileRef>
+   <FileRef
       location = "group:ChattingRobot(HTM).xcodeproj">
    </FileRef>
    <FileRef

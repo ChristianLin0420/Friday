@@ -1,9 +1,8 @@
 //
 //  Synapse+CoreDataProperties.swift
-//  ChattingRobot(HTM)
+//  
 //
-//  Created by Christian on 2020/4/10.
-//  Copyright © 2020 Christian. All rights reserved.
+//  Created by Christian on 2020/7/30.
 //
 //
 
@@ -20,6 +19,7 @@ extension Synapse {
     @NSManaged public var connectedX: Int16
     @NSManaged public var connectedY: Int16
     @NSManaged public var permanence: Float
-    @NSManaged public var segment: Segment
+    @NSManaged public var connectCellIndex: Int16
+    @NSManaged public var segment: Segment?
 
 }

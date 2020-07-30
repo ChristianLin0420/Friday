@@ -318,6 +318,8 @@ class HTMTemperalPooling {
                                 }
                             }
                             
+                            print("numActiveConnected: \(numActiveConnected), numActivePotential = \(numActivePotential)")
+                            
                             if numActiveConnected >= ActivatedCellThreshold {
                                 currentActiveDendrites.append(columns[row][col].Cells[i].dendrites[j])
                             }
@@ -459,6 +461,10 @@ class HTMTemperalPooling {
         }
         
         currentWinnerCells.append(WinnerCell)
+        
+        if column.Cells[cellIndex].dendrites[LearningDendritesIndex].synapses.count == 0 {
+            print("synapse count is zero")
+        }
         
         let synapses = column.Cells[cellIndex].dendrites[LearningDendritesIndex].synapses
                 

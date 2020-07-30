@@ -17,6 +17,8 @@
 		AA07BCB9240799A800DE382E /* ShowResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA07BCB8240799A800DE382E /* ShowResult.swift */; };
 		AA19EA432410E66100D03516 /* CortexParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA19EA422410E66100D03516 /* CortexParameters.swift */; };
 		AA1D1DC423F69E77005BCB73 /* ChineseCharactersChart.txt in Resources */ = {isa = PBXBuildFile; fileRef = AA1D1DC323F69E76005BCB73 /* ChineseCharactersChart.txt */; };
+		AA34757324D272A40040E399 /* Synapse+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA34757124D272A30040E399 /* Synapse+CoreDataClass.swift */; };
+		AA34757424D272A40040E399 /* Synapse+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA34757224D272A30040E399 /* Synapse+CoreDataProperties.swift */; };
 		AA393DEC242101BA00B403B2 /* TrainingRecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA393DEB242101BA00B403B2 /* TrainingRecordViewController.swift */; };
 		AA393E0A24211EF000B403B2 /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA393E0924211EF000B403B2 /* Record.swift */; };
 		AA5BFA8624AEDB8D00FE2017 /* SelectLayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5BFA8524AEDB8D00FE2017 /* SelectLayerViewController.swift */; };
@@ -28,8 +30,6 @@
 		AA70244A2440C44500738897 /* Column+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA70243A2440C44500738897 /* Column+CoreDataClass.swift */; };
 		AA70244C2440C44500738897 /* Link+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA70243C2440C44500738897 /* Link+CoreDataClass.swift */; };
 		AA70244D2440C44500738897 /* Link+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA70243D2440C44500738897 /* Link+CoreDataProperties.swift */; };
-		AA70244E2440C44500738897 /* Synapse+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA70243E2440C44500738897 /* Synapse+CoreDataClass.swift */; };
-		AA70244F2440C44500738897 /* Synapse+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA70243F2440C44500738897 /* Synapse+CoreDataProperties.swift */; };
 		AA7024502440C44500738897 /* Cell+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7024402440C44500738897 /* Cell+CoreDataClass.swift */; };
 		AA7024512440C44500738897 /* Cell+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7024412440C44500738897 /* Cell+CoreDataProperties.swift */; };
 		AA7024522440C44500738897 /* Segment+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7024422440C44500738897 /* Segment+CoreDataClass.swift */; };
@@ -72,6 +72,8 @@
 		AA07BCB8240799A800DE382E /* ShowResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowResult.swift; sourceTree = "<group>"; };
 		AA19EA422410E66100D03516 /* CortexParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CortexParameters.swift; sourceTree = "<group>"; };
 		AA1D1DC323F69E76005BCB73 /* ChineseCharactersChart.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = ChineseCharactersChart.txt; sourceTree = "<group>"; };
+		AA34757124D272A30040E399 /* Synapse+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Synapse+CoreDataClass.swift"; path = "/Users/christian/Desktop/HTM/ChattingRobot(HTM)/Code/ChattingRobot(HTM)_0730/Synapse+CoreDataClass.swift"; sourceTree = "<absolute>"; };
+		AA34757224D272A30040E399 /* Synapse+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Synapse+CoreDataProperties.swift"; path = "/Users/christian/Desktop/HTM/ChattingRobot(HTM)/Code/ChattingRobot(HTM)_0730/Synapse+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
 		AA393DEB242101BA00B403B2 /* TrainingRecordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrainingRecordViewController.swift; sourceTree = "<group>"; };
 		AA393E0924211EF000B403B2 /* Record.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Record.swift; sourceTree = "<group>"; };
 		AA5BFA8524AEDB8D00FE2017 /* SelectLayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectLayerViewController.swift; sourceTree = "<group>"; };
@@ -83,8 +85,6 @@
 		AA70243A2440C44500738897 /* Column+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Column+CoreDataClass.swift"; sourceTree = "<group>"; };
 		AA70243C2440C44500738897 /* Link+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Link+CoreDataClass.swift"; sourceTree = "<group>"; };
 		AA70243D2440C44500738897 /* Link+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Link+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		AA70243E2440C44500738897 /* Synapse+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Synapse+CoreDataClass.swift"; sourceTree = "<group>"; };
-		AA70243F2440C44500738897 /* Synapse+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Synapse+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		AA7024402440C44500738897 /* Cell+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Cell+CoreDataClass.swift"; sourceTree = "<group>"; };
 		AA7024412440C44500738897 /* Cell+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Cell+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		AA7024422440C44500738897 /* Segment+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Segment+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -154,12 +154,12 @@
 				AA958C2A24507AB2009102A9 /* Column+CoreDataProperties.swift */,
 				AA70243C2440C44500738897 /* Link+CoreDataClass.swift */,
 				AA70243D2440C44500738897 /* Link+CoreDataProperties.swift */,
-				AA70243E2440C44500738897 /* Synapse+CoreDataClass.swift */,
-				AA70243F2440C44500738897 /* Synapse+CoreDataProperties.swift */,
 				AA7024402440C44500738897 /* Cell+CoreDataClass.swift */,
 				AA7024412440C44500738897 /* Cell+CoreDataProperties.swift */,
 				AA7024422440C44500738897 /* Segment+CoreDataClass.swift */,
 				AA7024432440C44500738897 /* Segment+CoreDataProperties.swift */,
+				AA34757124D272A30040E399 /* Synapse+CoreDataClass.swift */,
+				AA34757224D272A30040E399 /* Synapse+CoreDataProperties.swift */,
 				AA7024462440C44500738897 /* ChrarcterRecord+CoreDataClass.swift */,
 				AA7024472440C44500738897 /* ChrarcterRecord+CoreDataProperties.swift */,
 				AA7024482440C44500738897 /* TrainRecord+CoreDataClass.swift */,
@@ -407,6 +407,7 @@
 				AA6054232420F1A2003F3B8C /* CharacterRecord.swift in Sources */,
 				AA7024592440C44500738897 /* TrainRecord+CoreDataProperties.swift in Sources */,
 				AA8CA4AC246C3438003F8437 /* LayerParameterViewController.swift in Sources */,
+				AA34757424D272A40040E399 /* Synapse+CoreDataProperties.swift in Sources */,
 				AA70244D2440C44500738897 /* Link+CoreDataProperties.swift in Sources */,
 				AA65159524BDEFA800D83819 /* miniColumn.swift in Sources */,
 				AA19EA432410E66100D03516 /* CortexParameters.swift in Sources */,
@@ -420,10 +421,10 @@
 				AA7024502440C44500738897 /* Cell+CoreDataClass.swift in Sources */,
 				AA958C2B24507AB3009102A9 /* Column+CoreDataProperties.swift in Sources */,
 				AAF5D04B2413932100529ED3 /* LearningChattingViewController.swift in Sources */,
-				AA70244F2440C44500738897 /* Synapse+CoreDataProperties.swift in Sources */,
 				AA60541B2420F0AC003F3B8C /* Structs.swift in Sources */,
 				AA07BCB9240799A800DE382E /* ShowResult.swift in Sources */,
 				AA70244A2440C44500738897 /* Column+CoreDataClass.swift in Sources */,
+				AA34757324D272A40040E399 /* Synapse+CoreDataClass.swift in Sources */,
 				AA6054252420F200003F3B8C /* ReadTrainData.swift in Sources */,
 				AA958C3124507B61009102A9 /* Layer+CoreDataProperties.swift in Sources */,
 				AA5BFA8624AEDB8D00FE2017 /* SelectLayerViewController.swift in Sources */,
@@ -436,7 +437,6 @@
 				AAC28C032409574F007C873E /* RecordTableViewCell.swift in Sources */,
 				AA7024562440C44500738897 /* ChrarcterRecord+CoreDataClass.swift in Sources */,
 				AA7024582440C44500738897 /* TrainRecord+CoreDataClass.swift in Sources */,
-				AA70244E2440C44500738897 /* Synapse+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -70,6 +70,7 @@ class Record {
                                     
                                     newSynapse.connectedX = Int16(synapse.connectCellCoordinate.first)
                                     newSynapse.connectedY = Int16(synapse.connectCellCoordinate.second)
+                                    newSynapse.connectCellIndex = Int16(synapse.connectCellIndex)
                                     newSynapse.permanence = synapse.permenance
                                     
                                     newSegment.addToSynapses(newSynapse)
@@ -164,7 +165,8 @@ class Record {
                                     for n in 0..<CoreDataSynapses.count {
                                         let connectedX = Int(CoreDataSynapses[n].connectedX)
                                         let connectedY = Int(CoreDataSynapses[n].connectedY)
-                                        let newSynapse = miniSynapse(coordinate: Pair(first: connectedX, second: connectedY), index: n, permenance: CoreDataSynapses[n].permanence)
+                                        let cellIndex = Int(CoreDataSynapses[n].connectCellIndex)
+                                        let newSynapse = miniSynapse(coordinate: Pair(first: connectedX, second: connectedY), index: cellIndex, permenance: CoreDataSynapses[n].permanence)
                                         
                                         synapses.append(newSynapse)
                                     }
@@ -279,6 +281,7 @@ class Record {
                                             
                                             newSynapse.connectedX = Int16(synapse.connectCellCoordinate.first)
                                             newSynapse.connectedY = Int16(synapse.connectCellCoordinate.second)
+                                            newSynapse.connectCellIndex = Int16(synapse.connectCellIndex)
                                             newSynapse.permanence = synapse.permenance
                                             
                                             newSegment.addToSynapses(newSynapse)

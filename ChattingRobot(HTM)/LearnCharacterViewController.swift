@@ -78,7 +78,7 @@ class LearnCharacterViewController: UIViewController, UITextFieldDelegate, UIPop
     
     // Trainning Timer
     private var timer = Timer()
-    private var currentTrainCount = CurrentTrainIndex
+    private var currentTrainCount = 0
     private var temp_trainCount = 0
     
     // Segue
@@ -167,9 +167,10 @@ class LearnCharacterViewController: UIViewController, UITextFieldDelegate, UIPop
         case "ShowGraph":
             let vc = segue.destination as! LearningGraphViewController
             vc.CharactersTrainningRecord = self.CharactersTrainningRecord
-//        case "goToChat":
-//            let vc = segue.destination as! LearningChattingViewController
-//            vc.ColumnOne = ColumnsLayer
+        case "goToChat":
+            let vc = segue.destination as! LearningChattingViewController
+            vc.Cortex = self.Cortex
+            vc.InputLayer = self.InputLayer
         default:
             print("Segue is Back mode!")
         }
